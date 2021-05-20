@@ -45,12 +45,6 @@ namespace Checkout.PaymentGateway.Controllers
         {
             var payment = await _paymentHandler.Retrieve(paymentId);
             return payment as ActionResult;
-            ////if (payment != null)
-            ////{
-            ////    return Ok(payment);
-            ////}
-
-            ////return NotFound($"Payment with id {paymentId} not found");
         }
     }
 }

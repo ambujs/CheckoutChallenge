@@ -28,7 +28,7 @@ namespace Checkout.PaymentGateway.Test
             // Assert
             paymentResponse.Should().NotBeNull();
             paymentResponse?.StatusCode.Should().Be(StatusCodes.Status200OK);
-            var payment = ((ObjectResult)paymentResponse?.Value)?.Value as Payment;
+            var payment = paymentResponse?.Value as Payment;
             payment.Should().NotBeNull();
         }
 
@@ -38,11 +38,13 @@ namespace Checkout.PaymentGateway.Test
             // Arrange
             var paymentId = Guid.NewGuid().ToString();
             var paymentHandlerMock = new Mock<IPaymentHandler>();
+            paymentHandlerMock.Setup(_ => _.Retrieve(paymentId)).ReturnsAsync(new NotFoundResult());
+
 
             var sut = new PaymentController(paymentHandlerMock.Object);
 
             // Act
-            var paymentResponse = await sut.Retrieve(paymentId) as NotFoundObjectResult;
+            var paymentResponse = await sut.Retrieve(paymentId) as NotFoundResult;
 
             // Assert
             paymentResponse.Should().NotBeNull();
