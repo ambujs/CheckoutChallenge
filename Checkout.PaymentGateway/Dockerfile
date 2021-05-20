@@ -2,15 +2,12 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /src
-COPY ["Checkout.PaymentGateway/Checkout.PaymentGateway.csproj", "Checkout.PaymentGateway/"]
-RUN dotnet restore "Checkout.PaymentGateway/Checkout.PaymentGateway.csproj"
-COPY . .
-WORKDIR "/src/Checkout.PaymentGateway"
+COPY ./Checkout.PaymentGateway.csproj /Checkout.PaymentGateway/
+RUN dotnet restore ./Checkout.PaymentGateway/Checkout.PaymentGateway.csproj
+COPY . ./Checkout.PaymentGateway/
+WORKDIR /Checkout.PaymentGateway/
 RUN dotnet build "Checkout.PaymentGateway.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -2,23 +2,16 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /src
-COPY ["Checkout.AcquiringBank.Mock/Checkout.AcquiringBank.Mock.csproj", "Checkout.AcquiringBank.Mock/"]
-#COPY ["Checkout.AcquiringBank.Mock.csproj", "/src/Checkout.AcquiringBank.Mock/"]
-RUN dir
-RUN dotnet restore "Checkout.AcquiringBank.Mock/Checkout.AcquiringBank.Mock.csproj"
-COPY . .
-
-WORKDIR "/src/Checkout.AcquiringBank.Mock"
-
+COPY ./Checkout.AcquiringBank.Mock.csproj /Checkout.AcquiringBank.Mock/
+RUN dotnet restore ./Checkout.AcquiringBank.Mock/Checkout.AcquiringBank.Mock.csproj
+COPY . ./Checkout.AcquiringBank.Mock/
+WORKDIR /Checkout.AcquiringBank.Mock/
 RUN dotnet build "Checkout.AcquiringBank.Mock.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Checkout.AcquiringBank.Mock/Checkout.AcquiringBank.Mock.csproj" -c Release -o /app/publish
+RUN dotnet publish "Checkout.AcquiringBank.Mock.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

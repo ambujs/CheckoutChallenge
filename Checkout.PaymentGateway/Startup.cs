@@ -1,3 +1,4 @@
+using System;
 using Checkout.PaymentGateway.Middleware;
 using Checkout.PaymentGateway.StartupConfiguration;
 using Microsoft.AspNetCore.Authentication;
@@ -8,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
@@ -46,7 +50,6 @@ namespace Checkout.PaymentGateway
 
             services.AddApplication(Configuration);
             services.AddSwagger(Environment.EnvironmentName);
-
 
             services
                 .AddMvcCore()

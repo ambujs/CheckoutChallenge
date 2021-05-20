@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+    acquiring-bank-mock:
+        build: Checkout.AcquiringBank.Mock/
+        restart: always
+        ports:
+            - "8088:80"
+
+    payment-gateway:
+        build: Checkout.PaymentGateway/
+        restart: always
+        ports:
+            - "9088:80"
+
+    mongodb_container:
+        image: mongo:latest
+        ports:
+          - "27017:27017"
+        

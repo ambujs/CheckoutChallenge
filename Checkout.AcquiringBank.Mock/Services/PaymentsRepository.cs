@@ -20,7 +20,7 @@ namespace Checkout.AcquiringBank.Mock.Services
         public async Task<string> SavePayment(Payment payment)
         {
             payment.Id = Guid.NewGuid().ToString();
-
+            payment.PaymentStatus.UpdatedAt = DateTimeOffset.UtcNow;
             
             await _payments.InsertOneAsync(payment);
             return payment.Id;
@@ -28,12 +28,15 @@ namespace Checkout.AcquiringBank.Mock.Services
 
         public async Task<Payment> GetPayment(string id)
         {
-            var payment = await _payments.Find(_ => _.Id == id).SingleAsync();
+            var payment = await _payments.Find(_ => _.Id == id).SingleOrDefaultAsync();
+
+            if (payment == null) return null;
 
             var length = payment.CardNumber.Length;
             payment.CardNumber = new string('X', length - 4) + payment.CardNumber[(length - 4)..];
 
             return payment;
+
         }
     }
 }

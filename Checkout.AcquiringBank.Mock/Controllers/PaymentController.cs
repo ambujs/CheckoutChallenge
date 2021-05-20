@@ -35,7 +35,13 @@ namespace Checkout.AcquiringBank.Mock.Controllers
         [SwaggerOperation(Summary = "Get the details of a payment")]
         public async Task<ActionResult> Retrieve(string paymentId)
         {
-            return Ok(await _paymentHandler.Retrieve(paymentId));
+            var payment = await _paymentHandler.Retrieve(paymentId);
+            if (payment != null)
+            {
+                return Ok(await _paymentHandler.Retrieve(paymentId));
+            }
+
+            return NotFound();
         }
     }
 }

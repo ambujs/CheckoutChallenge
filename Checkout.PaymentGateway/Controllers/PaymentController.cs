@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using App.Metrics.Logging;
 using Checkout.PaymentGateway.Attributes;
 using Checkout.PaymentGateway.Models;
 using Checkout.PaymentGateway.Services;
@@ -28,7 +30,7 @@ namespace Checkout.PaymentGateway.Controllers
         [SwaggerOperation(Summary = "Processes a payment")]
         public async Task<ActionResult> Process([FromBody] Payment payment)
         {
-            Log.Logger.Information("Here..");   // NOTE: personal preference here to use a static logger over injecting an ILogger
+            Log.Logger.Information("Process payment request received...");   // NOTE: personal preference here to use a static logger over injecting an ILogger
 
             var response = await _paymentHandler.Process(payment);
             return Ok(response);
@@ -42,13 +44,13 @@ namespace Checkout.PaymentGateway.Controllers
         public async Task<ActionResult> Retrieve(string paymentId)
         {
             var payment = await _paymentHandler.Retrieve(paymentId);
+            return payment as ActionResult;
+            ////if (payment != null)
+            ////{
+            ////    return Ok(payment);
+            ////}
 
-            if (payment != null)
-            {
-                return Ok(payment);
-            }
-
-            return NotFound($"Payment with id {paymentId} not found");
+            ////return NotFound($"Payment with id {paymentId} not found");
         }
     }
 }
