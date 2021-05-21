@@ -22,6 +22,9 @@ There are two possible ways of running the code in this repository:
 - Then you should have these two Swagger URLs available for testing the application:
   - http://localhost:9088/api/index.html (Payment Gateway service)
   - http://localhost:8088/api/index.html (Acquiring bank mock service)
+- You'll need to authenticate before sending a request from Swagger. Use the following details:
+  - Username: checkout
+  - Password: checkout123
 
 - If you don't have Docker installed or run into any issues trying to do the above (and that's possible for a multitude of reasons!) then you can open & run the solution from Visual Studio 2019 too. Just remember to:
   - ensure that both `Checkout.AcquiringBank.Mock` and `Checkout.PaymentGateway` are setup as startup projects
