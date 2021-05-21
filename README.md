@@ -39,5 +39,5 @@ There are two possible ways of running the code in this repository:
 - Build script / CI: CI has been enabled on the repository. A CI pipeline is triggered every time there's a commit on the repository (https://github.com/ambujs/CheckoutChallenge/actions)
 - Performance testing: A performance test project has been added to the solution which utilises Benchmark (https://github.com/dotnet/BenchmarkDotNet) to do some basic tests.
 - Encryption: I'm encrypting the card numbers using `Aes` before storing them into mongo
-- Data storage: The acquiring bank mock service needs to store the data somewhere to that it can return the payments when requested. MongoDb has been used for this.
+- Data storage: The acquiring bank mock service needs to store the data somewhere so that it can return the payments when requested. MongoDb has been used for this.
 
