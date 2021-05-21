@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Checkout.AcquiringBank.Mock.Models;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
 namespace Checkout.AcquiringBank.Mock.Services
@@ -8,9 +9,12 @@ namespace Checkout.AcquiringBank.Mock.Services
     public class PaymentsRepository : IPaymentsRepository
     {
         private readonly IMongoCollection<Payment> _payments;
+        private readonly IConfiguration _configuration;
 
-        public PaymentsRepository(IPaymentDatabaseSettings paymentDatabaseSettings)
+        public PaymentsRepository(IPaymentDatabaseSettings paymentDatabaseSettings, IConfiguration configuration)
         {
+            _configuration = configuration;
+
             var client = new MongoClient(paymentDatabaseSettings.ConnectionString);
             var database = client.GetDatabase(paymentDatabaseSettings.DatabaseName);
 
@@ -20,6 +24,8 @@ namespace Checkout.AcquiringBank.Mock.Services
         public async Task<string> SavePayment(Payment payment)
         {
             payment.Id = Guid.NewGuid().ToString();
+
+            payment.CardNumber = payment.CardNumber.Encrypt(_configuration["encryptionKey"]);
             payment.PaymentStatus.UpdatedAt = DateTimeOffset.UtcNow;
             
             await _payments.InsertOneAsync(payment);
@@ -32,8 +38,11 @@ namespace Checkout.AcquiringBank.Mock.Services
 
             if (payment == null) return null;
 
-            var length = payment.CardNumber.Length;
-            payment.CardNumber = new string('X', length - 4) + payment.CardNumber[(length - 4)..];
+            var cardNumber = payment.CardNumber;
+            cardNumber = cardNumber.Decrypt(_configuration["encryptionKey"]);
+
+            var length = cardNumber.Length;
+            payment.CardNumber = new string('X', length - 4) + cardNumber[(length - 4)..];
 
             return payment;
 

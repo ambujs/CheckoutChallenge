@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Checkout.PaymentGateway
 {
+/*
     public class EnumSchemaFilter : ISchemaFilter
     {
         public void Apply(OpenApiSchema model, SchemaFilterContext context)
@@ -19,4 +20,5 @@ namespace Checkout.PaymentGateway
             }
         }
     }
+*/
 }
