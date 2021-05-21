@@ -1,1 +1,41 @@
-# CheckoutChallenge
+# Checkout .NET Challenge
+This repository has got the .NET code to complete the Checkout.com .NET challenge.
+
+## Components
+- Payment Gateway: Checkout.PaymentGateway
+- Acquiring bank mock service: Checkout.AcquiringBank.Mock
+- MongoDb: for data storage to be used by Acquiring bank mock service
+- 
+## Possible improvements
+- A CD pipeline can be implemented
+
+## How to run the code
+There are two possible ways of running the code in this repository:
+- If you have Docker installed then the best and easiest way will be to run the following two commands from the solution folder:
+  -   `docker-compose build`
+  -   `docker-compose up`
+  This should build & start a Docker container with these three services:
+![image](https://user-images.githubusercontent.com/1502181/119105789-99a8fb00-ba15-11eb-96b0-207a1221c442.png)
+
+- Then you should have these two Swagger URLs available for testing the application:
+  - http://localhost:9088/api/index.html (Payment Gateway service)
+  - http://localhost:8088/api/index.html (Acquiring bank mock service)
+
+- If you don't have Docker installed or run into any issues trying to do the above (and that's possible for a multitude of reasons!) then you can open & run the solution from Visual Studio 2019 too. Just remember to:
+  - ensure that both `Checkout.AcquiringBank.Mock` and `Checkout.PaymentGateway` are setup as startup projects
+  - ensure that you have an instance of MongoDb running and accessible and the update the connection string in appsettings.json of Checkout.PaymentGateway
+
+## Requirements
+
+
+## Extra mile!
+- Application logging: Logging has been implemented using Serilog.
+- Application metrics: Metrics are being collected using AppMetrics which can integrated with Prometheus & Grafana.
+- Containerization: The entire application, including two services & mongodb, have been containerized.
+- Authentication: Authentication has been implemented using basic auth.
+- API client: Swagger has been enabled on both the payment gateway and acquiring bank mock services.
+- Build script / CI: CI has been enabled on the repository. A CI pipeline is triggered every time there's a commit on the repository (https://github.com/ambujs/CheckoutChallenge/actions)
+- Performance testing: A performance test project has been added to the solution which utilises Benchmark (https://github.com/dotnet/BenchmarkDotNet) to do some basic tests.
+- Encryption: ?
+- Data storage: The acquiring bank mock service needs to store the data somewhere to that it can return the payments when requested. MongoDb has been used for this.
+
