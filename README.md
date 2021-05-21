@@ -37,7 +37,7 @@ There are two possible ways of running the code in this repository:
 
 ## Extra mile!
 - Application logging: Logging has been implemented using Serilog.
-- Application metrics: Metrics are being collected using AppMetrics which can integrated with Prometheus & Grafana.
+- Application metrics: Metrics are being collected using AppMetrics (data available on /metrics endpoint) which can integrated with Prometheus & Grafana.
 - Containerization: The entire application, including two services & mongodb, have been containerized.
 - Authentication: Authentication has been implemented using basic auth.
 - API client: Swagger has been enabled on both the payment gateway and acquiring bank mock services.
