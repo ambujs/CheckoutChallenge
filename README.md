@@ -10,6 +10,7 @@ This repository has got the .NET code to complete the Checkout.com .NET challeng
 - A CD pipeline can be implemented.
 - The application is currently using basic auth but a more secure authentication method can be implemented using JWT tokens.
 - Add more unit, integration and performance tests. I have just laid out the basic framework for the tests but these can definitely be extended provided if we have more time.
+- When running from the Docker container, the two APIs use http protocol. This was done just for simplicity of this demo but can be improved to use https with certficates
 
 ## How to run the code
 There are two possible ways of running the code in this repository:
