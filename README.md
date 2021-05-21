@@ -7,7 +7,8 @@ This repository has got the .NET code to complete the Checkout.com .NET challeng
 - MongoDb: for data storage to be used by Acquiring bank mock service
 - 
 ## Possible improvements
-- A CD pipeline can be implemented
+- A CD pipeline can be implemented.
+- The application is currently using basic auth but a more secure authentication method can be implemented using JWT tokens.
 
 ## How to run the code
 There are two possible ways of running the code in this repository:
