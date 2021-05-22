@@ -13,12 +13,12 @@ namespace Checkout.PaymentGateway.Services
             _acquiringBankClient = acquiringBankClient;
         }
 
-        public async Task<IActionResult> Process(Payment payment)
+        public async Task<ActionResult<PaymentResponse>> Process(Payment payment)
         {
             return await _acquiringBankClient.ProcessPayment(payment);
         }
 
-        public async Task<IActionResult> Retrieve(string paymentId)
+        public async Task<ActionResult<Payment>> Retrieve(string paymentId)
         {
             return await _acquiringBankClient.GetPayment(paymentId);
         }

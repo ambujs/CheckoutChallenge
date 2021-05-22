@@ -25,7 +25,13 @@ namespace Checkout.AcquiringBank.Mock.Controllers
         [SwaggerOperation(Summary = "Processes a payment")]
         public async Task<ActionResult> Process([FromBody] PaymentRequest payment)
         {
-            return Ok(await _paymentHandler.Process(payment));
+            var response = await _paymentHandler.Process(payment);
+            if (response.PaymentStatus.Successful)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest(response);
         }
 
         [HttpGet]

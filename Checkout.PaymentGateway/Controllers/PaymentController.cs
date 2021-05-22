@@ -26,13 +26,13 @@ namespace Checkout.PaymentGateway.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerOperation(Summary = "Processes a payment")]
-        public async Task<ActionResult> Process([FromBody] Payment payment)
+        public async Task<ActionResult<PaymentResponse>> Process([FromBody] Payment payment)
         {
             Log.Logger.Information("Process payment request received...");   // NOTE: personal preference here to use a static logger over injecting an ILogger
 
             var response = await _paymentHandler.Process(payment);
 
-            return Ok(response);
+            return response;
         }
 
         [HttpGet]
@@ -40,10 +40,10 @@ namespace Checkout.PaymentGateway.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerOperation(Summary = "Get the details of a payment")]
-        public async Task<ActionResult> Retrieve(string paymentId)
+        public async Task<ActionResult<Payment>> Retrieve(string paymentId)
         {
             var payment = await _paymentHandler.Retrieve(paymentId);
-            return payment as ActionResult;
+            return payment;
         }
     }
 }

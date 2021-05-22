@@ -53,8 +53,9 @@ namespace Checkout.PaymentGateway.IntegrationTest
         public async void GetPayment_WithoutAuth_ReturnsUnauthorizedError()
         {
             // Arrange
-            // Act
             var client = _factory.CreateClient();
+
+            // Act
             var response = await client.GetAsync("/api/payment/123");
 
             // Assert
@@ -64,12 +65,12 @@ namespace Checkout.PaymentGateway.IntegrationTest
         public class MockAcquiringBankClient : IAcquiringBankClient
         {
             // TODO: add tests around this method
-            public Task<IActionResult> ProcessPayment(Payment payment)
+            public Task<ActionResult<PaymentResponse>> ProcessPayment(Payment payment)
             {
                 throw new NotImplementedException();
             }
 
-            public async Task<IActionResult> GetPayment(string paymentId)
+            public async Task<ActionResult<Payment>> GetPayment(string paymentId)
             {
                 await Task.CompletedTask;   // to stop warnings
                 return new OkObjectResult(new Payment());

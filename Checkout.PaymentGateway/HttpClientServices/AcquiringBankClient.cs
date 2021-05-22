@@ -17,7 +17,7 @@ namespace Checkout.PaymentGateway.HttpClientServices
             _httpClient = client;
         }
 
-        public async Task<IActionResult> ProcessPayment(Payment payment)
+        public async Task<ActionResult<PaymentResponse>> ProcessPayment(Payment payment)
         {
             var url = $"api/payment";
             var json = JsonConvert.SerializeObject(payment);
@@ -39,10 +39,16 @@ namespace Checkout.PaymentGateway.HttpClientServices
                 return NotFound();
             }
 
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return BadRequest(JsonConvert.DeserializeObject<PaymentResponse>(content));
+            }
+
             throw new HttpRequestException($"Error calling acquiring-bank: {response.StatusCode} {response.ReasonPhrase}");
         }
 
-        public async Task<IActionResult> GetPayment(string paymentId)
+        public async Task<ActionResult<Payment>> GetPayment(string paymentId)
         {
             var url = $"api/payment/{paymentId}";
 

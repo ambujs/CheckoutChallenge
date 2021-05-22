@@ -23,12 +23,12 @@ namespace Checkout.PaymentGateway.Test
             var sut = new PaymentController(paymentHandlerMock.Object);
 
             // Act
-            var paymentResponse = await sut.Retrieve(paymentId) as OkObjectResult;
+            var paymentResponse = await sut.Retrieve(paymentId);
 
             // Assert
             paymentResponse.Should().NotBeNull();
-            paymentResponse?.StatusCode.Should().Be(StatusCodes.Status200OK);
-            var payment = paymentResponse?.Value as Payment;
+            ((ObjectResult)paymentResponse.Result).StatusCode.Should().Be(StatusCodes.Status200OK);
+            var payment = ((ObjectResult)paymentResponse.Result).Value as Payment;
             payment.Should().NotBeNull();
         }
 
@@ -44,11 +44,11 @@ namespace Checkout.PaymentGateway.Test
             var sut = new PaymentController(paymentHandlerMock.Object);
 
             // Act
-            var paymentResponse = await sut.Retrieve(paymentId) as NotFoundResult;
+            var paymentResponse = await sut.Retrieve(paymentId);
 
             // Assert
             paymentResponse.Should().NotBeNull();
-            paymentResponse?.StatusCode.Should().Be(StatusCodes.Status404NotFound);
+            ((ObjectResult)paymentResponse.Result).StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
     }
 }
