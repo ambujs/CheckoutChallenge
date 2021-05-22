@@ -40,7 +40,6 @@ namespace Checkout.PaymentGateway.Test
             var paymentHandlerMock = new Mock<IPaymentHandler>();
             paymentHandlerMock.Setup(_ => _.Retrieve(paymentId)).ReturnsAsync(new NotFoundResult());
 
-
             var sut = new PaymentController(paymentHandlerMock.Object);
 
             // Act
@@ -48,7 +47,7 @@ namespace Checkout.PaymentGateway.Test
 
             // Assert
             paymentResponse.Should().NotBeNull();
-            ((ObjectResult)paymentResponse.Result).StatusCode.Should().Be(StatusCodes.Status404NotFound);
+            ((StatusCodeResult)paymentResponse.Result).StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
     }
 }
