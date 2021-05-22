@@ -17,7 +17,7 @@ using Xunit;
 
 namespace Checkout.PaymentGateway.IntegrationTest
 {
-    // NOTE: more tests can be added to cover more scnearios
+    // NOTE: more tests can be added to cover more scenarios
     public class PaymentControllerTests : IClassFixture<PaymentGatewayFactory<PaymentControllerTests.FakeStartup>>
     {
         private readonly WebApplicationFactory<FakeStartup> _factory;

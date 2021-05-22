@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using App.Metrics.Logging;
+﻿using System.Threading.Tasks;
 using Checkout.PaymentGateway.Attributes;
 using Checkout.PaymentGateway.Models;
 using Checkout.PaymentGateway.Services;
@@ -33,6 +31,7 @@ namespace Checkout.PaymentGateway.Controllers
             Log.Logger.Information("Process payment request received...");   // NOTE: personal preference here to use a static logger over injecting an ILogger
 
             var response = await _paymentHandler.Process(payment);
+
             return Ok(response);
         }
 

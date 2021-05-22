@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Checkout.AcquiringBank.Mock.Extensions;
 using Checkout.AcquiringBank.Mock.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;

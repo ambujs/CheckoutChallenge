@@ -18,28 +18,6 @@ namespace Checkout.AcquiringBank.Mock.StartupConfiguration
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(Version, new OpenApiInfo { Title = GetTitle(environmentName), Version = Version });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
-                });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new List<string>()
-                    }
-                });
 
                 c.EnableAnnotations();
             });

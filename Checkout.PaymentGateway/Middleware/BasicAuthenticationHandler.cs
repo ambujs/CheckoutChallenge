@@ -13,6 +13,10 @@ namespace Checkout.PaymentGateway.Middleware
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
+        // TODO: just a quick & simple implementation. This should obviously be stored somewhere else
+        private const string Username = "checkout";
+        private const string Password = "checkout123";
+
         public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
@@ -46,7 +50,7 @@ namespace Checkout.PaymentGateway.Middleware
             var authUsername = authSplit[0];
             var authPassword = authSplit.Length > 1 ? authSplit[1] : throw new Exception("Unable to get password");
 
-            if (authUsername != "checkout" || authPassword != "checkout123")
+            if (authUsername != Username || authPassword != Password)
             {
                 return Task.FromResult(AuthenticateResult.Fail("The username or password is not correct."));
             }
