@@ -51,6 +51,13 @@ There are two possible ways of running the code in this repository:
 - API client: Swagger has been enabled on both the payment gateway and acquiring bank mock services.
 - Build script / CI: CI has been enabled on the repository. A CI pipeline is triggered every time there's a commit on the repository (https://github.com/ambujs/CheckoutChallenge/actions)
 - Performance testing: A performance test project has been added to the solution which utilises Benchmark (https://github.com/dotnet/BenchmarkDotNet) to do some basic tests.
+  - In order to run the performance test:
+    - Ensure that the APIs are running
+    - Navigate to the `CheckoutChallenge\Checkout.PaymentGateway.PerformanceTest` folder
+    - Run `dotnet run --configuration Release`
+    - You should see results in this format:
+    ![image](https://user-images.githubusercontent.com/1502181/119241307-623d6a00-bb4d-11eb-8238-b4d7486fed26.png)
+
 - Encryption: I'm encrypting the card numbers using `Aes` before storing them into mongo
 - Data storage: The acquiring bank mock service needs to store the data somewhere so that it can return the payments when requested. MongoDb has been used for this.
 
