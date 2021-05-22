@@ -6,11 +6,21 @@ This repository has got the .NET code to complete the Checkout.com .NET challeng
 - Acquiring bank mock service: Checkout.AcquiringBank.Mock
 - MongoDb: for data storage to be used by Acquiring bank mock service
 
+## Requirements
+- A merchant can post a message to Checkout.PaymentGateway's `/api/Payment` endpoint for processing a card payment. If the payment is successful, then this endpoint will return an unique payment reference back.
+  - `HTTP 200` is returned if the payment is successful
+  - `HTTP 400` is returned if the payment is not successful
+  
+- The unique payment reference can then be used to send a message to Checkout.PaymentGateway's `/api/Payment/{paymentId}` endpoint to retrieve the details of the payment. Only the last 4 digits of the card number are returned.
+  - `HTTP 200` is returned if the payment details are successfully retrieved
+  - `HTTP 404` is returned if the payment details are not successfully retrieved
+
 ## Possible improvements
 - A CD pipeline can be implemented.
 - The application is currently using basic auth but a more secure authentication method can be implemented using JWT tokens.
 - Add more unit, integration and performance tests. I have just laid out the basic framework for the tests but these can definitely be extended provided if we have more time.
 - When running from the Docker container, the two APIs use http protocol. This was done just for simplicity of this demo but can be improved to use https with certficates
+- WE should ideally also have counter fraud measures added to the code. E.g. checks to ensure that we stop the bots from trying various combinations of card numbers.
 - I have left TODOs and NOTEs in the code which should give an idea of areas that can be extended & expanded.
 
 ## How to run the code
@@ -31,8 +41,6 @@ There are two possible ways of running the code in this repository:
 - If you don't have Docker installed or run into any issues trying to do the above (and that's possible for a multitude of reasons!) then you can open & run the solution from Visual Studio 2019 too. Just remember to:
   - ensure that both `Checkout.AcquiringBank.Mock` and `Checkout.PaymentGateway` are setup as startup projects
   - ensure that you have an instance of MongoDb running and accessible and the update the connection string in appsettings.json of Checkout.PaymentGateway
-
-## Requirements
 
 
 ## Extra mile!
