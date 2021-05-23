@@ -33,7 +33,6 @@ namespace Checkout.AcquiringBank.Mock
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() };
                 });
 
-            services.AddAutoMapper(typeof(Startup));
             services.AddSwagger(Environment.EnvironmentName);
             services.AddApplication(Configuration);
         }
