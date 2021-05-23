@@ -40,6 +40,8 @@ namespace Checkout.PaymentGateway
             BsonSerializer.RegisterSerializationProvider(new DateTimeOffsetSerializationProvider());
             services.AddApplication(Configuration);
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("BasicAuthentication", new AuthorizationPolicyBuilder("BasicAuthentication").RequireAuthenticatedUser().Build());
