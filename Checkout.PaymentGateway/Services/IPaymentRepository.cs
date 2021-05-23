@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Checkout.AcquiringBank.Mock.Models;
+using Checkout.PaymentGateway.Models.Mongo;
 
-namespace Checkout.AcquiringBank.Mock.Services
+namespace Checkout.PaymentGateway.Services
 {
-    public interface IPaymentsRepository
+    public interface IPaymentRepository
     {
         Task<string> SavePayment(Payment payment);
         Task<Payment> GetPayment(string id);

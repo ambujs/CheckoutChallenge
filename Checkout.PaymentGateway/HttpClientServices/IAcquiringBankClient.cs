@@ -6,7 +6,7 @@ namespace Checkout.PaymentGateway.HttpClientServices
 {
     public interface IAcquiringBankClient
     {
-        Task<ActionResult<PaymentResponse>> ProcessPayment(Payment payment);
+        Task<ActionResult<AcquirerResponse>> ProcessPayment(Payment payment);
         Task<ActionResult<Payment>> GetPayment(string paymentId);
     }
 }

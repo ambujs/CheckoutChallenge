@@ -32,7 +32,12 @@ namespace Checkout.PaymentGateway.Controllers
 
             var response = await _paymentHandler.Process(payment);
 
-            return response;
+            if (response.Value.PaymentStatus.Successful)
+            {
+                return Ok(response.Value);
+            }
+
+            return BadRequest(response.Value);
         }
 
         [HttpGet]

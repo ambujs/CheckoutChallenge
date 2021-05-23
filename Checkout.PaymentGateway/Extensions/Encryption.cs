@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Checkout.AcquiringBank.Mock.Extensions
+namespace Checkout.PaymentGateway.Extensions
 {
     public static class Encryption
     {

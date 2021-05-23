@@ -1,4 +1,5 @@
 using Checkout.PaymentGateway.Middleware;
+using Checkout.PaymentGateway.Services;
 using Checkout.PaymentGateway.StartupConfiguration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Bson.Serialization;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
@@ -35,6 +37,9 @@ namespace Checkout.PaymentGateway
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() };
                 });
 
+            BsonSerializer.RegisterSerializationProvider(new DateTimeOffsetSerializationProvider());
+            services.AddApplication(Configuration);
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("BasicAuthentication", new AuthorizationPolicyBuilder("BasicAuthentication").RequireAuthenticatedUser().Build());
@@ -44,7 +49,6 @@ namespace Checkout.PaymentGateway
                 .AddAuthentication()
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", options => { });
 
-            services.AddApplication(Configuration);
             services.AddSwagger(Environment.EnvironmentName);
 
             services

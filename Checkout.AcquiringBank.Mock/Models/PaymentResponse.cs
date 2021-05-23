@@ -2,7 +2,7 @@
 {
     public class PaymentResponse
     {
-        public string PaymentId { get; set; }
-        public PaymentStatus PaymentStatus { get; set; }
+        public bool Successful { get; set; }
+        public string ErrorCode { get; set; }
     }
 }

@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Checkout.AcquiringBank.Mock.Extensions;
-using Checkout.AcquiringBank.Mock.Models;
+using Checkout.PaymentGateway.Extensions;
+using Checkout.PaymentGateway.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using Payment = Checkout.PaymentGateway.Models.Mongo.Payment;
 
-namespace Checkout.AcquiringBank.Mock.Services
+namespace Checkout.PaymentGateway.Services
 {
-    public class PaymentsRepository : IPaymentsRepository
+    public class PaymentRepository : IPaymentRepository
     {
         private readonly IMongoCollection<Payment> _payments;
         private readonly IConfiguration _configuration;
 
-        public PaymentsRepository(IPaymentDatabaseSettings paymentDatabaseSettings, IConfiguration configuration)
+        public PaymentRepository(IPaymentDatabaseSettings paymentDatabaseSettings, IConfiguration configuration)
         {
             _configuration = configuration;
 
@@ -27,7 +28,7 @@ namespace Checkout.AcquiringBank.Mock.Services
             payment.Id = Guid.NewGuid().ToString();
 
             payment.CardNumber = payment.CardNumber.Encrypt(_configuration["encryptionKey"]);
-            payment.PaymentStatus.UpdatedAt = DateTimeOffset.UtcNow;
+            payment.UpdatedAt = DateTimeOffset.UtcNow;
             
             await _payments.InsertOneAsync(payment);
             return payment.Id;

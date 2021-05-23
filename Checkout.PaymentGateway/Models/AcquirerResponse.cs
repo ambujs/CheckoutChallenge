@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Checkout.PaymentGateway.Models
+﻿namespace Checkout.PaymentGateway.Models
 {
-    public class PaymentStatus
+    public class AcquirerResponse
     {
         public bool Successful { get; set; }
         public string ErrorCode { get; set; }

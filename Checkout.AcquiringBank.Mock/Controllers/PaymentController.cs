@@ -26,28 +26,12 @@ namespace Checkout.AcquiringBank.Mock.Controllers
         public async Task<ActionResult> Process([FromBody] PaymentRequest payment)
         {
             var response = await _paymentHandler.Process(payment);
-            if (response.PaymentStatus.Successful)
+            if (response.Successful)
             {
                 return Ok(response);
             }
 
             return BadRequest(response);
-        }
-
-        [HttpGet]
-        [Route("/api/payment/{paymentId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [SwaggerOperation(Summary = "Get the details of a payment")]
-        public async Task<ActionResult> Retrieve(string paymentId)
-        {
-            var payment = await _paymentHandler.Retrieve(paymentId);
-            if (payment != null)
-            {
-                return Ok(await _paymentHandler.Retrieve(paymentId));
-            }
-
-            return NotFound();
         }
     }
 }

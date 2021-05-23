@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using App.Metrics.AspNetCore;
 using Checkout.PaymentGateway.HttpClientServices;
 using Checkout.PaymentGateway.Models;
+using Checkout.PaymentGateway.Services;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -62,10 +63,26 @@ namespace Checkout.PaymentGateway.IntegrationTest
             response.StatusCode.Should().Be(StatusCodes.Status401Unauthorized);
         }
 
+        // NOTE: we are not testing mongo integration here so it's ok to mock this
+        // If needed we can have in-memory version of mongodb that can be used with integration tests and CI pipelines
+        public class MockPaymentRepository : IPaymentRepository
+        {
+            // TODO: add tests around this method
+            public Task<string> SavePayment(Models.Mongo.Payment payment)
+            {
+                throw new NotImplementedException();
+            }
+
+            public Task<Models.Mongo.Payment> GetPayment(string id)
+            {
+                return Task.FromResult(new Models.Mongo.Payment());
+            }
+        }
+
         public class MockAcquiringBankClient : IAcquiringBankClient
         {
             // TODO: add tests around this method
-            public Task<ActionResult<PaymentResponse>> ProcessPayment(Payment payment)
+            public Task<ActionResult<AcquirerResponse>> ProcessPayment(Payment payment)
             {
                 throw new NotImplementedException();
             }
@@ -88,6 +105,7 @@ namespace Checkout.PaymentGateway.IntegrationTest
                 base.ConfigureServices(services);
                 services.AddMetrics();
                 services.AddSingleton<IAcquiringBankClient, MockAcquiringBankClient>();
+                services.AddSingleton<IPaymentRepository, MockPaymentRepository>();
             }
         }
     }

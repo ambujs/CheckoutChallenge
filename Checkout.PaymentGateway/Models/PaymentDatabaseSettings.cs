@@ -1,4 +1,4 @@
-﻿namespace Checkout.AcquiringBank.Mock.Models
+﻿namespace Checkout.PaymentGateway.Models
 {
     public class PaymentDatabaseSettings : IPaymentDatabaseSettings
     {
